@@ -91,7 +91,37 @@ app.get('/pagecount', function (req, res) {
     res.send('{ pageCount: -1 }');
   }
 });
+var querystring = require('querystring');
+var request = require('request');
+app.get('/come', function (req, res) {
 
+
+
+
+    var form = {
+        cap: 'nN7gp',
+        codigo: '100505',
+        pass: '87592'
+    };
+
+    var formData = querystring.stringify(form);
+    var contentLength = formData.length;
+
+    request({
+        headers: {
+            'Content-Length': contentLength,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Cookie':'PHPSESSID=hbl5459i9dsgvbqshsf7isgo15'
+        },
+        uri: 'http://bienestar.unsaac.edu.pe/registro.php',
+        body: formData,
+        method: 'POST'
+    }, function (err, resp, body) {
+        if(err)throw err;
+        res.send(body)
+
+    });
+});
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
